@@ -47,7 +47,7 @@ class Dullard::Workbook
     "dd\\-mmm\\-yy" => :date,
   }
 
-  STANDARD_FORMATS = { 
+  STANDARD_FORMATS = {
     0 => 'General',
     1 => '0',
     2 => '0.00',
@@ -90,6 +90,13 @@ class Dullard::Workbook
     @sheets = workbook.css("sheet").each_with_index.map {|n,i| Dullard::Sheet.new(self, n.attr("name"), n.attr("sheetId"), i+1) }
   end
 
+  def get_sheet(sheet_name)
+    sheets.each do |sheet|
+      return sheet if sheet.name == sheet_name
+    end
+    nil
+  end
+
   def string_table
     @string_tabe ||= read_string_table
   end
@@ -111,10 +118,10 @@ class Dullard::Workbook
 
   def read_styles
     doc = Nokogiri::XML(@zipfs.file.open("xl/styles.xml"))
-    
+
     @num_formats = {}
     @cell_xfs = []
-    
+
     doc.css('/styleSheet/numFmts/numFmt').each do |numFmt|
       numFmtId = numFmt.attributes['numFmtId'].value.to_i
       formatCode = numFmt.attributes['formatCode'].value
@@ -127,7 +134,7 @@ class Dullard::Workbook
     end
   end
 
-  
+
   # Code borrowed from Roo (https://github.com/hmcgowan/roo/blob/master/lib/roo/excelx.rb)
   # convert internal excelx attribute to a format
   def attribute2format(s)
