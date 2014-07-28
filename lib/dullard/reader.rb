@@ -44,7 +44,7 @@ class Dullard::Workbook
     'mm/dd/yy' => :date,
     'mm/dd/yyyy' => :date,
     'm/d/yyyy' => :date,
-    'dd-mmm-yy' => :date,
+    "dd\\-mmm\\-yy" => :date,
   }
 
   STANDARD_FORMATS = { 
