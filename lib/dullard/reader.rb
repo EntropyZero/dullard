@@ -192,6 +192,7 @@ class Dullard::Sheet
       row = nil
       column = nil
       cell_type = nil
+      closed = true
       Nokogiri::XML::Reader(@file).each do |node|
         case node.node_type
         when Nokogiri::XML::Reader::TYPE_ELEMENT
@@ -201,6 +202,9 @@ class Dullard::Sheet
             column = 0
             next
           when "c"
+            row << "" unless closed
+            closed = false
+
             if node.attributes['t'] != 's' && node.attributes['t'] != 'b'
               cell_format_index = node.attributes['s'].to_i
               cell_type = @workbook.format2type(@workbook.attribute2format(cell_format_index))
@@ -220,6 +224,8 @@ class Dullard::Sheet
           end
         when Nokogiri::XML::Reader::TYPE_END_ELEMENT
           if node.name == "row"
+            row << "" unless closed
+            closed = true
             y << row
             next
           end
