@@ -217,6 +217,7 @@ class Dullard::Sheet
               rcolumn.delete!("0-9")
               while column < self.class.column_names.size and rcolumn != self.class.column_names[column]
                 row << nil
+                closed = true
                 column += 1
               end
             end
