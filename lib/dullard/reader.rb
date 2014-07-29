@@ -205,6 +205,8 @@ class Dullard::Sheet
             row << "" unless closed
             closed = false
 
+            cell_type = :boolean if node.attributes['t'] == 'b'
+
             if node.attributes['t'] != 's' && node.attributes['t'] != 'b'
               cell_format_index = node.attributes['s'].to_i
               cell_type = @workbook.format2type(@workbook.attribute2format(cell_format_index))
@@ -241,6 +243,8 @@ class Dullard::Sheet
             when :percentage # ? TODO
             when :float
               value = value.to_f
+            when :boolean
+              value = (value.to_i == 1) ? true : false 
             else
               # leave as string
           end
