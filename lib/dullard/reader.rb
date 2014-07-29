@@ -244,7 +244,7 @@ class Dullard::Sheet
             when :float
               value = value.to_f
             when :boolean
-              value = (value.to_i == 1) ? true : false 
+              value = (value.to_i == 1) ? "TRUE" : "FALSE"
             else
               # leave as string
           end
