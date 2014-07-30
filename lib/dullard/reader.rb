@@ -205,12 +205,13 @@ class Dullard::Sheet
             row << "" unless closed
             closed = false
 
-            cell_type = :boolean if node.attributes['t'] == 'b'
-
             if node.attributes['t'] != 's' && node.attributes['t'] != 'b'
               cell_format_index = node.attributes['s'].to_i
               cell_type = @workbook.format2type(@workbook.attribute2format(cell_format_index))
             end
+
+            cell_type = :boolean if node.attributes['t'] == 'b'
+            cell_type = :string if node.attributes['t'] == 'inlineStr'
 
             rcolumn = node.attributes["r"]
             if rcolumn
@@ -224,6 +225,7 @@ class Dullard::Sheet
             column += 1
             next
           when "is"
+            cell_type = :string
             next
           end
         when Nokogiri::XML::Reader::TYPE_END_ELEMENT
