@@ -223,6 +223,8 @@ class Dullard::Sheet
             shared = (node.attribute("t") == "s")
             column += 1
             next
+          when "is"
+            next
           end
         when Nokogiri::XML::Reader::TYPE_END_ELEMENT
           if node.name == "row"
