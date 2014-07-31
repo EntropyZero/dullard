@@ -202,7 +202,10 @@ class Dullard::Sheet
             column = 0
             next
           when "c"
-            row << "" unless closed
+            unless closed
+              row << ""
+              cell_type = nil
+            end
             closed = false
 
             if node.attributes['t'] != 's' && node.attributes['t'] != 'b'
@@ -230,7 +233,10 @@ class Dullard::Sheet
           end
         when Nokogiri::XML::Reader::TYPE_END_ELEMENT
           if node.name == "row"
-            row << "" unless closed
+            unless closed
+              row << ""
+              cell_type = nil
+            end
             closed = true
             y << row
             next
