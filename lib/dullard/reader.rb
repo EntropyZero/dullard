@@ -252,7 +252,7 @@ class Dullard::Sheet
               value = (DateTime.new(1899,12,30) + value.to_f)
             when :percentage # ? TODO
             when :float
-              value = value.to_f
+              value = convert(value.to_f)
             when :boolean
               value = (value.to_i == 1) ? "TRUE" : "FALSE"
             else
@@ -265,6 +265,14 @@ class Dullard::Sheet
         end
       end
     end
+  end
+
+  def convert x
+    Float(x)
+    i, f = x.to_i, x.to_f
+    i == f ? i : f
+  rescue ArgumentError
+    x
   end
 
   # Returns A to ZZZ.
