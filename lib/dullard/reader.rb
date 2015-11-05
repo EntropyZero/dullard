@@ -232,6 +232,9 @@ class Dullard::Sheet
             next
           end
         when Nokogiri::XML::Reader::TYPE_END_ELEMENT
+          if node.name == "sheetData"
+            break
+          end
           if node.name == "row"
             unless closed
               row << ""
