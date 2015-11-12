@@ -263,7 +263,7 @@ class Dullard::Sheet
           end
           cell_type = nil
 
-          row << (shared ? string_lookup(value.to_i) : value)
+          row << (shared ? string_lookup(value.to_i) : value) unless row.nil?
           closed = true
         end
       end
